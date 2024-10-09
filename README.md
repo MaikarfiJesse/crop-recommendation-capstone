@@ -34,3 +34,9 @@ Vercel will automatically deploy your front-end.
 
 # Back-End Deployment
 For deploying the Node.js back-end, you can use Heroku or Vercel.
+
+# Link to Demo Video
+https://drive.google.com/drive/folders/1AtexHO_PZIaex9vlXoCIBuwMFfDecj8a?usp=drive_link 
+
+# Link to Model 
+https://colab.research.google.com/drive/1JYRqTlI7DCQRH6xS8aTfLt0VB53tbJJj?usp=sharing 
