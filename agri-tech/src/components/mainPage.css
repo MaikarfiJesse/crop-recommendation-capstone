@@ -1,0 +1,10 @@
+#body{
+    font-family: 'Poppins', sans-serif;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+#body h1, h2, button{
+    color: rgb(9, 133, 36);
+}
