@@ -1,6 +1,8 @@
 // import React from 'react'
 import { Link } from 'react-router-dom';
 import './mainPage.css';
+import Button from 'react-bootstrap/Button';
+
 // import BackgroundImage from '/smart-farming_img.webp';
 
 function MainPage() {
@@ -14,6 +16,7 @@ function MainPage() {
             <p>It uses machine learning algorithms to analyze the data and provide recommendations to the farmers.</p>
             <p>With Agri-Tech, farmers can make informed decisions about their crops and improve their yield.</p>
         </div>
+
         <div id='sidebar'>
             <h2>How it works</h2>
             {/* <ol> */}
@@ -29,8 +32,7 @@ function MainPage() {
 
         <br></br>
         <Link to="/data">
-        <button id='start'>
-            Get Started</button>
+        <Button variant="outline-success">Get Started</Button>{' '}
         </Link>
     </div>
    
