@@ -11,7 +11,7 @@ Crop recommendation logic based on machine learning models.
 Clean and intuitive UI for easy data input.
 
 # Link to GitHub Repository
-https://github.com/MaikarfiJesse/crop-recommendation-capstone/edit/main/README.md
+https://github.com/MaikarfiJesse/crop-recommendation-capstone.git
 
 # How to Set Up the Environment and Project
 
