@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {OrbitProgress} from "react-loading-indicators";
 import './dataForm.css';
 
 function DataFields() {
@@ -13,6 +14,9 @@ function DataFields() {
     rainfall: "",
   });
 
+  const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,18 +25,87 @@ function DataFields() {
   };
 
 
-  const postData = async () => {
-    const data = {
-      nitrogen: formData.nitrogen,
-      phosphorous: formData.phosphorous,
-      potassium: formData.potassium,
-      temperature: formData.temperature,
-      humidity: formData.humidity,
-      ph: formData.ph,
-      rainfall: formData.rainfall,
+  const preprocessData = (data) => {
+    // Convert string values to appropriate types
+    const nitrogen = parseFloat(data.nitrogen);
+    const phosphorous = parseFloat(data.phosphorous);
+    const potassium = parseFloat(data.potassium);
+    const temperature = parseFloat(data.temperature);
+    const humidity = parseFloat(data.humidity);
+    const ph = parseFloat(data.ph);
+    const rainfall = parseFloat(data.rainfall);
+  
+    // Return the preprocessed data in the desired format
+    return {
+      nitrogen,
+      phosphorous,
+      potassium,
+      temperature,
+      humidity,
+      ph,
+      rainfall,
     };
-    console.log(data); // Placeholder for where you'd send the data to your backend
   };
+
+
+  // query API by feeding the data to the model and get the result
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      // Call handleConfirmInput to preprocess data
+      // await handleConfirmInput();
+  
+      // Use preprocessed data
+      const data = preprocessData({
+        nitrogen: formData.nitrogen,
+        phosphorous: formData.phosphorous,
+        potassium: formData.potassium,
+        temperature: formData.temperature,
+        humidity: formData.humidity,
+        ph: formData.ph,
+        rainfall: formData.rainfall,
+      });
+  
+      // Log data before sending the request
+      console.log('Data being sent:', data);
+  
+      setIsLoading(true); // Set loading state while waiting for response
+  
+      const response = await fetch('http://127.0.0.1:8080/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+  
+      setIsLoading(false); // Reset loading state after response received
+  
+      if (response.ok) {
+        // Check if the response body has been consumed
+        if (!response.bodyUsed) {
+          const responseBody = await response.text();
+          const prediction = JSON.parse(responseBody).prediction;
+          setResult(prediction);
+          console.log(prediction);
+        } else {
+          console.error('Error: Response body already read.');
+          setResult('');
+        }
+      } else {
+        // Display error message
+        console.error('Error:', response.statusText);
+        setResult('');
+      }
+    } catch (error) {
+      // Display error message
+      console.error('Error:', error);
+      setResult('');
+      setIsLoading(false); // Reset loading state in case of error
+    }
+  };
+
 
   return (
     <div className="agriData-page">
@@ -41,7 +114,7 @@ function DataFields() {
         <h2>Farmer Information Form</h2>
         <form>
           <div className="form-group">
-            <label>Nitrogen Content:</label>
+            <label>Nitrogen Content (N):</label>
             <input
               type="number"
               name="nitrogen"
@@ -51,7 +124,7 @@ function DataFields() {
           </div>
 
           <div className="form-group">
-            <label>Phosphorous Content:</label>
+            <label>Phosphorous Content (P):</label>
             <input
               type="number"
               name="phosphorous"
@@ -61,7 +134,7 @@ function DataFields() {
           </div>
 
           <div className="form-group">
-            <label>Potassium Content:</label>
+            <label>Potassium Content (K):</label>
             <input
               type="number"
               name="potassium"
@@ -116,12 +189,12 @@ function DataFields() {
 
         <br />
         <div className="buttons">
-          <Link to="/">
+        <Link to="/">
             <button type="button" id="back-button">
               Back
             </button>
           </Link>
-          <button type="submit" onClick={postData}>
+          <button type="submit" onClick={handleSubmit}>
             Confirm Crop
           </button>
         </div>
@@ -129,7 +202,12 @@ function DataFields() {
         {/* Results section */}
         <div>
           <h2>Results</h2>
-          <p>Results will be displayed here...</p>
+          {isLoading && <h2>The best crop for these conditions is:</h2> }
+          
+          {isLoading && <OrbitProgress variant="spokes" dense color="#32cd32" size="large" text="Loading..." textColor="#070707" /> }
+      
+          {/* {result && <p>{result}</p>} */}
+          {!isLoading && <p>{result}</p>}
         </div>
       </div>
     </div>
