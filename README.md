@@ -22,18 +22,41 @@ Node.js: Install Node.js
 Git: Install Git
 MongoDB/Firebase (Optional): If you plan to store data persistently, set up a database like MongoDB Atlas or Firebase.
 
-# Deployment Plan
+## How to run the backend:
 
-# Front-End Deployment
+create a virtual env:
+```sh
+python3 -m venv venv
+```
 
-using Vercel:
+activate virtual env:
+```sh
+source env/bin/activate
+```
 
-Sign up for Vercel.
-Connect your GitHub repository to Vercel.
-Vercel will automatically deploy your front-end.
+Navigate to this folder:
+```sh
+cd j_models
+```
+start the backend:
+```sh
+python main.py
+```
 
-# Back-End Deployment
-For deploying the Node.js back-end, you can use Heroku or Vercel.
+## How to run Frontend:
+navigate to react-app
+```sh
+cd agri-tech/src
+```
+
+install dependencies
+```sh
+npm i
+```
+
+open browser
+copy url and paste on a browser : -http://localhost:5173/
+
 
 # Link to Demo Video
 https://drive.google.com/drive/folders/1AtexHO_PZIaex9vlXoCIBuwMFfDecj8a?usp=drive_link 
