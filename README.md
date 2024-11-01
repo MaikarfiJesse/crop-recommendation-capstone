@@ -7,7 +7,7 @@ The Crop Recommendation App helps farmers and agricultural stakeholders identify
 # Features:
 
 User sign-up with input fields for essential soil and environmental parameters.
-Crop recommendation logic based on machine learning models (to be integrated).
+Crop recommendation logic based on machine learning models.
 Clean and intuitive UI for easy data input.
 
 # Link to GitHub Repository
